@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הפחד הוא נמר · וובינר של אנלוגיקל</title>
+<meta name="description" content="וובינר של אנלוגיקל: כלים פרקטיים לזמן המבחן הפסיכומטרי, ובסוף זמן לשאלות. יום שלישי, 17.11, בזום, חינם.">
+<meta property="og:title" content="הפחד הוא נמר · וובינר של אנלוגיקל">
+<meta property="og:description" content="וובינר של אנלוגיקל: כלים פרקטיים לזמן המבחן הפסיכומטרי, ובסוף זמן לשאלות. יום שלישי, 17.11, בזום, חינם.">
+<meta property="og:image" content="https://idanschre.github.io/webinar/cover.jpg">
+<meta property="og:url" content="https://idanschre.github.io/webinar/">
+<meta property="og:type" content="website">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Rubik:wght@400;500;700;800&display=swap">
+<style>
+  /* the Arena's floor and cards: the one visual language of the product (CLAUDE.md, covenant rule 50) */
+  :root{
+    --floor:#0A0A0D; --card:#1B1B20; --card-2:#131318; --line:#26262E;
+    --ink:#F0EEF5; --ink-2:#A29CB0; --ink-3:#6C6680;
+    --brand:#A98BFF; --brand-deep:#8B5CF6; --teal:#37D6C2; --green:#81B64C; --pink:#F1568C;
+    --serif:"Frank Ruhl Libre",Georgia,serif; --sans:"Rubik","Heebo","Segoe UI",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--floor);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.7;overflow-x:hidden}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px 96px}
+  header{display:flex;align-items:center;justify-content:space-between;padding:18px 0 6px}
+  header img{height:22px;opacity:.9}
+  header .tag{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--brand);border:1px solid rgba(169,139,255,.45);border-radius:999px;padding:4px 10px}
+  h1{font-family:var(--serif);font-weight:900;font-size:clamp(2.1rem,8vw,3.4rem);line-height:1.1;margin:22px 0 10px;text-wrap:balance}
+  h1 .colon{color:var(--brand)}
+  .lede{color:var(--ink-2);font-size:1.08rem;margin:0 0 22px;max-width:48ch}
+  /* the film: portrait, one card, the real thing */
+  .film{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  /* a black 9:16 card the width follows from the height, so the portrait is never cropped on a wide screen
+     (full width on a phone, 82vh tall at most on a desktop) */
+  .film video{display:block;width:min(100%,calc(82vh * 9 / 16));max-height:82vh;aspect-ratio:9/16;margin-inline:auto;border-radius:14px;background:#000;object-fit:contain}
+  .film .meta{display:flex;justify-content:space-between;align-items:center;color:var(--ink-3);font-size:13px;padding:10px 6px 2px}
+  .film .meta b{color:var(--ink-2);font-weight:500}
+  /* three lines, floating cards, never a welded strip */
+  .three{display:grid;gap:10px;margin:22px 0 0}
+  .row{display:grid;grid-template-columns:92px 1fr;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+  .row .k{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--brand);padding-top:4px}
+  .row .v{color:var(--ink);font-size:1rem}
+  .row .v small{display:block;color:var(--ink-3);font-size:13px;margin-top:2px}
+  /* the one button, and the form it opens */
+  .cta{display:block;width:100%;margin:22px 0 0;padding:17px 20px;border:0;border-radius:999px;background:var(--brand);color:#12061F;font:800 1.1rem var(--sans);cursor:pointer;box-shadow:0 0 40px rgba(169,139,255,.35)}
+  .cta:hover{background:#B9A2FF}
+  .cta:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+  form{display:none;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px}
+  form.open{display:grid;gap:12px}
+  label{display:grid;gap:6px;font-size:14px;color:var(--ink-2)}
+  input{font:500 1rem var(--sans);color:var(--ink);background:var(--card-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;outline:none}
+  input:focus{border-color:var(--brand)}
+  .fine{font-size:12.5px;color:var(--ink-3);margin:0}
+  .fine a{color:var(--ink-2)}
+  .check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-2);line-height:1.5}
+  .check input{width:20px;height:20px;margin:2px 0 0;padding:0;accent-color:var(--brand);flex:none}
+  .ok{display:none;margin-top:14px;background:rgba(129,182,76,.08);border:1px solid rgba(129,182,76,.4);border-radius:16px;padding:16px;color:#D6EBBE}
+  .err{display:none;margin-top:14px;background:rgba(241,86,140,.08);border:1px solid rgba(241,86,140,.4);border-radius:16px;padding:16px;color:#FFCBDF}
+  footer{margin-top:40px;color:var(--ink-3);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  footer a{color:var(--ink-2)}
+  @media (max-width:420px){.row{grid-template-columns:1fr}.row .k{padding-top:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="wordmark-on-dark.png" alt="אנלוגיקל">
+    <span class="tag">וובינר · חינם</span>
+  </header>
+
+  <h1>הפחד הוא נמר<span class="colon">.</span></h1>
+  <p class="lede">כלים פרקטיים לזמן המבחן הפסיכומטרי.</p>
+
+  <section class="film" aria-label="הסרט">
+    <video id="film" controls playsinline preload="metadata" poster="cover.jpg"></video>
+    <div class="meta"><span><b>אנלוגיקל מציגים</b> · הפחד הוא נמר</span><span id="dur"></span></div>
+  </section>
+
+  <section class="three" aria-label="על הוובינר">
+    <div class="row"><div class="k">מתי</div><div class="v">יום שלישי, 17.11.2026 · בזום<small>השעה והקישור יגיעו במייל.</small></div></div>
+    <div class="row"><div class="k">מה</div><div class="v">כלים פרקטיים לזמן המבחן הפסיכומטרי.<small>ובסוף, זמן לשאלות.</small></div></div>
+  </section>
+
+  <button class="cta" id="open">להרשמה</button>
+
+  <form id="form" novalidate>
+    <label>שם פרטי<input name="first_name" autocomplete="given-name" required maxlength="60"></label>
+    <label>אימייל<input name="email" type="email" autocomplete="email" required maxlength="120" dir="ltr"></label>
+    <label>טלפון, לא חובה<input name="phone" type="tel" autocomplete="tel" maxlength="20" dir="ltr"></label>
+    <label class="check"><input type="checkbox" name="marketing"><span>אפשר לשלוח לי גם עדכונים נוספים</span></label>
+    <button class="cta" type="submit" id="send">נרשמים</button>
+    <p class="fine">הפרטים נשמרים אצל אנלוגיקל, רק בשביל הוובינר. למחיקה: analogikalpsy@gmail.com · <a href="https://drspanalot.github.io/privacy.html">פרטיות</a></p>
+  </form>
+  <div class="ok" id="ok">נרשמת. השעה וקישור הזום יגיעו במייל.</div>
+  <div class="err" id="verr">צריך שם ואימייל תקין.</div>
+  <div class="err" id="err">משהו לא עבד. אפשר לנסות שוב, או לכתוב ל-analogikalpsy@gmail.com.</div>
+
+  <footer>
+    <span>אנלוגיקל</span>
+    <span><a href="https://drspanalot.github.io/privacy.html">פרטיות</a> · <a href="https://drspanalot.github.io/terms.html">תנאים</a></span>
+  </footer>
+</div>
+
+<script>
+  // ---- what Idan fills before publishing (nothing here is secret: the anon key is public by design, RLS guards the table) ----
+  const FILM_URL = 'film.mp4';                      // the web copy of version 11, next to this page
+  const SUPABASE_URL = 'https://axonirmmsjxmqyfzptpv.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_Y379k24E-ts82o_Fzi5jQw_SqRayqxw';                      // VITE_SUPABASE_ANON_KEY from .env.local; empty = the mailto fallback below
+  const FALLBACK_MAILTO = '';                        // e.g. 'hello@example.com'; used only when the table write is not possible
+  const WHEN = '';                                   // the date is written in the page itself; set this only to override it
+
+  // og:image must be absolute for WhatsApp and Facebook. Crawlers do not run scripts, so the deploy step
+  // ALSO writes the absolute address into the tag itself (docs/WEBINAR_PAGE.md); this line covers the
+  // page as served from any origin for everything that does run it.
+  const og = document.querySelector('meta[property="og:image"]');
+  if (og && !/^https?:\/\//.test(og.content)) og.content = new URL(og.content, location.href).href;
+
+  const film = document.getElementById('film'), dur = document.getElementById('dur');
+  film.src = FILM_URL;
+  // the duration comes only from the file; a film that failed to load says so in words, never a number
+  film.addEventListener('loadedmetadata', () => { const s = Math.round(film.duration); if (Number.isFinite(s)) dur.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; });
+  film.addEventListener('error', () => { dur.textContent = 'הסרט בדרך'; });
+  
+  const form = document.getElementById('form'), ok = document.getElementById('ok'), err = document.getElementById('err'), verr = document.getElementById('verr');
+  document.getElementById('open').addEventListener('click', () => { form.classList.add('open'); form.querySelector('input').focus(); document.getElementById('open').style.display = 'none'; });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); err.style.display = 'none'; verr.style.display = 'none';
+    const data = Object.fromEntries(new FormData(form).entries());
+    if (!data.first_name.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) { verr.style.display = 'block'; return; }
+    const row = { first_name: data.first_name.trim(), email: data.email.trim().toLowerCase(), phone: data.phone.trim() || null, source: location.pathname + location.search, film: 'fear-is-a-tiger-11', marketing_ok: !!data.marketing };
+    document.getElementById('send').disabled = true;
+    try {
+      if (SUPABASE_ANON_KEY) {
+        const r = await fetch(`${SUPABASE_URL}/rest/v1/webinar_signup`, { method: 'POST', headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(row) });
+        // 409: this email is already registered, which is a success for the visitor
+        if (!r.ok && r.status !== 409) throw new Error('supabase ' + r.status);
+      } else if (FALLBACK_MAILTO) {
+        location.href = `mailto:${FALLBACK_MAILTO}?subject=${encodeURIComponent('הרשמה לוובינר')}&body=${encodeURIComponent(`${row.first_name}\n${row.email}\n${row.phone ?? ''}`)}`;
+      } else { throw new Error('no destination configured'); }
+      form.style.display = 'none'; ok.style.display = 'block';
+      try { localStorage.setItem('webinar_signup', '1'); } catch {}
+    } catch (ex) { console.error(ex); err.style.display = 'block'; document.getElementById('send').disabled = false; }
+  });
+</script>
+</body>
+</html>
