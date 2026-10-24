@@ -46,7 +46,7 @@
   .row .v{color:var(--ink);font-size:1rem}
   .row .v small{display:block;color:var(--ink-3);font-size:13px;margin-top:2px}
   /* the one button, and the form it opens */
-  .cta{display:block;width:100%;margin:22px 0 0;padding:17px 20px;border:0;border-radius:999px;background:var(--brand);color:#12061F;font:800 1.1rem var(--sans);cursor:pointer;box-shadow:0 0 40px rgba(169,139,255,.35)}
+  .cta{display:block;text-align:center;text-decoration:none;box-sizing:border-box;width:100%;margin:22px 0 0;padding:17px 20px;border:0;border-radius:999px;background:var(--brand);color:#12061F;font:800 1.1rem var(--sans);cursor:pointer;box-shadow:0 0 40px rgba(169,139,255,.35)}
   .cta:hover{background:#B9A2FF}
   .cta:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
   form{display:none;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 16px}
@@ -85,19 +85,8 @@
     <div class="row"><div class="k">מה</div><div class="v">כלים פרקטיים לזמן המבחן הפסיכומטרי.<small>ובסוף, זמן לשאלות.</small></div></div>
   </section>
 
-  <button class="cta" id="open">להרשמה</button>
-
-  <form id="form" novalidate>
-    <label>שם פרטי<input name="first_name" autocomplete="given-name" required maxlength="60"></label>
-    <label>אימייל<input name="email" type="email" autocomplete="email" required maxlength="120" dir="ltr"></label>
-    <label>טלפון, לא חובה<input name="phone" type="tel" autocomplete="tel" maxlength="20" dir="ltr"></label>
-    <label class="check"><input type="checkbox" name="marketing"><span>אפשר לשלוח לי גם עדכונים נוספים</span></label>
-    <button class="cta" type="submit" id="send">נרשמים</button>
-    <p class="fine">הפרטים נשמרים אצל אנלוגיקל, רק בשביל הוובינר. למחיקה: analogikalpsy@gmail.com · <a href="https://drspanalot.github.io/privacy.html">פרטיות</a></p>
-  </form>
-  <div class="ok" id="ok">נרשמת. השעה וקישור הזום יגיעו במייל.</div>
-  <div class="err" id="verr">צריך שם ואימייל תקין.</div>
-  <div class="err" id="err">משהו לא עבד. אפשר לנסות שוב, או לכתוב ל-analogikalpsy@gmail.com.</div>
+  <a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLSdKEW9YyVry16-zYaBnM3okmCS9RxwlvOh34DvTvdwqmLEkiw/viewform?usp=dialog" target="_blank" rel="noopener">להרשמה</a>
+  <p class="fine" style="margin-top:10px;text-align:center">ההרשמה בטופס של גוגל. השעה וקישור הזום יגיעו במייל.</p>
 
   <footer>
     <span>אנלוגיקל</span>
@@ -106,12 +95,8 @@
 </div>
 
 <script>
-  // ---- what Idan fills before publishing (nothing here is secret: the anon key is public by design, RLS guards the table) ----
+  // the film: the web copy of version 11, next to this page
   const FILM_URL = 'film.mp4';                      // the web copy of version 11, next to this page
-  const SUPABASE_URL = 'https://axonirmmsjxmqyfzptpv.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_Y379k24E-ts82o_Fzi5jQw_SqRayqxw';                      // VITE_SUPABASE_ANON_KEY from .env.local; empty = the mailto fallback below
-  const FALLBACK_MAILTO = '';                        // e.g. 'hello@example.com'; used only when the table write is not possible
-  const WHEN = '';                                   // the date is written in the page itself; set this only to override it
 
   // og:image must be absolute for WhatsApp and Facebook. Crawlers do not run scripts, so the deploy step
   // ALSO writes the absolute address into the tag itself (docs/WEBINAR_PAGE.md); this line covers the
@@ -125,27 +110,6 @@
   film.addEventListener('loadedmetadata', () => { const s = Math.round(film.duration); if (Number.isFinite(s)) dur.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; });
   film.addEventListener('error', () => { dur.textContent = 'הסרט בדרך'; });
   
-  const form = document.getElementById('form'), ok = document.getElementById('ok'), err = document.getElementById('err'), verr = document.getElementById('verr');
-  document.getElementById('open').addEventListener('click', () => { form.classList.add('open'); form.querySelector('input').focus(); document.getElementById('open').style.display = 'none'; });
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault(); err.style.display = 'none'; verr.style.display = 'none';
-    const data = Object.fromEntries(new FormData(form).entries());
-    if (!data.first_name.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) { verr.style.display = 'block'; return; }
-    const row = { first_name: data.first_name.trim(), email: data.email.trim().toLowerCase(), phone: data.phone.trim() || null, source: location.pathname + location.search, film: 'fear-is-a-tiger-11', marketing_ok: !!data.marketing };
-    document.getElementById('send').disabled = true;
-    try {
-      if (SUPABASE_ANON_KEY) {
-        const r = await fetch(`${SUPABASE_URL}/rest/v1/webinar_signup`, { method: 'POST', headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(row) });
-        // 409: this email is already registered, which is a success for the visitor
-        if (!r.ok && r.status !== 409) throw new Error('supabase ' + r.status);
-      } else if (FALLBACK_MAILTO) {
-        location.href = `mailto:${FALLBACK_MAILTO}?subject=${encodeURIComponent('הרשמה לוובינר')}&body=${encodeURIComponent(`${row.first_name}\n${row.email}\n${row.phone ?? ''}`)}`;
-      } else { throw new Error('no destination configured'); }
-      form.style.display = 'none'; ok.style.display = 'block';
-      try { localStorage.setItem('webinar_signup', '1'); } catch {}
-    } catch (ex) { console.error(ex); err.style.display = 'block'; document.getElementById('send').disabled = false; }
-  });
 </script>
 </body>
 </html>
